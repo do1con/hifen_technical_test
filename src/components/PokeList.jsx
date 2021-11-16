@@ -16,7 +16,6 @@ const PokeList = () => {
     });
     setPokemonList(result.results);
     setMaxPage(Math.ceil(result.count / 10)); // 1 page 10 pokemons
-    console.log('포키몬', result.results);
   }
   useEffect(() => {
     getPokemons();
@@ -29,7 +28,6 @@ const PokeList = () => {
       <PokeListWrapper>
           {pokemonList.map((data) => {
             const id = Number(data.url.replace(/[^0-9]/g,"").slice(1));
-            console.log('id', id);
             return <PokemonCard pokemonId={id} pokemonName={data.name} />
           })
           }
