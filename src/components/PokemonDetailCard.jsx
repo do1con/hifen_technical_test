@@ -75,7 +75,10 @@ const PokemonDetailCardBox = styled.div`
   top: 50%;
   transform: translate(-50%, -50%);
   width: 500px;
-  height: 360px;
+  @media screen and (max-width: 620px) {
+    width: 300px;
+  }
+  height: 400px;
   background-color: #ffffff;
   z-index: 3;
   padding: 20px;
@@ -85,6 +88,9 @@ const PokemonDetailCardBox = styled.div`
 const PokemonName = styled.h2`
   font-weight: bolder;
   font-size: 22px;
+  @media screen and (max-width: 620px) {
+    font-size: 16px;
+  }
 `;
 
 const TitleSectionDiv = styled.div`
@@ -101,6 +107,12 @@ const Attribute = styled.span`
   background-color: #cfcfcf;
   padding: 5px;
   margin: 5px;
+  font-size: 16px;
+  @media screen and (max-width: 620px) {
+    padding: 3px;
+    margin: 3px;
+    font-size: 14px;
+  }
 `;
 
 const CloseButton = styled.button`
