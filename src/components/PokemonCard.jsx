@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-const PokemonCard = ({ pokemonId, pokemonName }) => {
+const PokemonCard = ({ pokemonId, pokemonName, setShowDetail }) => {
   return (
-    <PokemonCardWrapper>
+    <PokemonCardWrapper onClick={() => setShowDetail(pokemonName)}>
       <PokemonImage
         src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/${pokemonId}.png`}
         alt={pokemonName}
@@ -18,6 +18,7 @@ const PokemonCard = ({ pokemonId, pokemonName }) => {
 PokemonCard.propTypes = {
   pokemonId: PropTypes.number.isRequired,
   pokemonName: PropTypes.string.isRequired,
+  setShowDetail: PropTypes.func.isRequired,
 }
 
 export default PokemonCard;
