@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { Pokedex as Poke } from 'pokeapi-js-wrapper';
 import styled from 'styled-components';
 import Pagenation from './Pagenation';
@@ -7,7 +7,7 @@ import PokemonDetailCard from './PokemonDetailCard';
 import SearchBar from './SearchBar';
 
 const PokeList = () => {
-  const Pokedex = new Poke();
+  const Pokedex = useMemo(() => new Poke(), []);
   const [pokemonList, setPokemonList] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [maxPage, setMaxPage] = useState(1);
@@ -16,15 +16,15 @@ const PokeList = () => {
   const [pokemonDescription, setPokemonDescription] = useState("");
   const [pokemonSearchValue, setPokemonSearchValue] = useState("");
   const [notFoundOnSearch, setNotFoundOnSearch] = useState(false);
-  const getPokemons = async () => {
+  const getPokemons = useCallback(async () => {
     const result = await Pokedex.getPokemonsList({
       limit: 10,
       offset: (currentPage - 1) * 10,
     });
     setPokemonList(result.results);
     setMaxPage(Math.ceil(result.count / 10)); // 1 page 10 pokemons
-  }
-  const getPokemonDetail = async () => {
+  }, [Pokedex, currentPage])
+  const getPokemonDetail =  useCallback(async () => {
     setPokemonDetail({loading: "loading..."});
     setPokemonDescription("loading...");
     if(showDetail) {
@@ -36,8 +36,8 @@ const PokeList = () => {
       setPokemonDetail(detailResult);
       setPokemonDescription(englishDescription[0].flavor_text)
     }
-  }
-  const searchPokemonByValue = async () => {
+  }, [Pokedex, showDetail]);
+  const searchPokemonByValue =  useCallback(async () => {
     if (pokemonSearchValue === "") {
       getPokemons();
       setNotFoundOnSearch(false);
@@ -56,19 +56,19 @@ const PokeList = () => {
       setPokemonList([]);
       setMaxPage(1);
     }
-  }
+  }, [Pokedex, getPokemons, pokemonSearchValue]);
   useEffect(() => {
     getPokemons();
-  }, []);
+  }, [getPokemons]);
   useEffect(() => {
     getPokemons();
-  }, [currentPage]);
+  }, [currentPage, getPokemons]);
   useEffect(() => {
     getPokemonDetail();
-  }, [showDetail]);
+  }, [getPokemonDetail, showDetail]);
   useEffect(() => {
     searchPokemonByValue();
-  }, [pokemonSearchValue])
+  }, [pokemonSearchValue, searchPokemonByValue])
   
   return (
     <div>
