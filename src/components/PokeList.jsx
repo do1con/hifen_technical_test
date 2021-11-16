@@ -97,13 +97,15 @@ const PokeList = () => {
           pokemonDescription={pokemonDescription}
         />
       }
-      {pokemonDescription === "loading..." && <LoadingScreen>loading...</LoadingScreen>}
-      {notFoundOnSearch && (
-        <div>
-          <p>There is no Pokemon you are looking for...</p>
-          <p>Search blank to return</p>
-        </div>
-      )}
+      <PokeListWrapper>
+        {pokemonDescription === "loading..." && <LoadingScreen>loading...</LoadingScreen>}
+        {notFoundOnSearch && (
+          <div>
+            <p>There is no Pokemon you are looking for...</p>
+            <p>Search blank to return</p>
+          </div>
+        )}
+      </PokeListWrapper>
     </div>
   )
 }
