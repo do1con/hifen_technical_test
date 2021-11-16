@@ -1,6 +1,6 @@
 used yarn for package managing.
 
-## how to start this project
+## how to run this project
 
 1. run terminal
 2. go to this project's folder ex) cd hifen_technical_test
