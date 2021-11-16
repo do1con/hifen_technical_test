@@ -38,7 +38,7 @@ const Pagenation = ({ currentPage, maxPage, setCurrentPage }) => {
         </PageButton>
       }
       {drawPages()}
-      {maxPage >= bandMaxPage &&
+      {maxPage > bandMaxPage &&
         <PageButton
           onClick={() => setCurrentPage(bandMaxPage + 1)}
         >
