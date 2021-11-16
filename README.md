@@ -1,4 +1,4 @@
-used yarn for package manager.
+used yarn for package managing.
 
 ## how to start this project
 
