@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import Pagenation from './Pagenation';
 import PokemonCard from './PokemonCard';
 import PokemonDetailCard from './PokemonDetailCard';
+import SearchBar from './SearchBar';
 
 const PokeList = () => {
   const Pokedex = new Poke();
@@ -13,6 +14,8 @@ const PokeList = () => {
   const [showDetail, setShowDetail] = useState("");
   const [pokemonDetail, setPokemonDetail] = useState({});
   const [pokemonDescription, setPokemonDescription] = useState("");
+  const [pokemonSearchValue, setPokemonSearchValue] = useState("");
+  const [notFoundOnSearch, setNotFoundOnSearch] = useState(false);
   const getPokemons = async () => {
     const result = await Pokedex.getPokemonsList({
       limit: 10,
@@ -34,6 +37,26 @@ const PokeList = () => {
       setPokemonDescription(englishDescription[0].flavor_text)
     }
   }
+  const searchPokemonByValue = async () => {
+    if (pokemonSearchValue === "") {
+      getPokemons();
+      setNotFoundOnSearch(false);
+      return;
+    }
+    try{
+      const result = await Pokedex.getPokemonByName(pokemonSearchValue);
+      setPokemonList([{
+        name: result.name,
+        url: result.species.url
+      }]);
+      setNotFoundOnSearch(false);
+      setMaxPage(1);
+    } catch {
+      setNotFoundOnSearch(true);
+      setPokemonList([]);
+      setMaxPage(1);
+    }
+  }
   useEffect(() => {
     getPokemons();
   }, []);
@@ -43,9 +66,13 @@ const PokeList = () => {
   useEffect(() => {
     getPokemonDetail();
   }, [showDetail]);
+  useEffect(() => {
+    searchPokemonByValue();
+  }, [pokemonSearchValue])
   
   return (
     <div>
+      <SearchBar setPokemonSearchValue={setPokemonSearchValue} />
       <PokeListWrapper>
           {pokemonList.map((data) => {
             const id = Number(data.url.replace(/[^0-9]/g,"").slice(1));
@@ -71,6 +98,12 @@ const PokeList = () => {
         />
       }
       {pokemonDescription === "loading..." && <LoadingScreen>loading...</LoadingScreen>}
+      {notFoundOnSearch && (
+        <div>
+          <p>There is no Pokemon you are looking for...</p>
+          <p>Search blank to return</p>
+        </div>
+      )}
     </div>
   )
 }
