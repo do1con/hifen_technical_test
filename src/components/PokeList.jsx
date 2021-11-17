@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { Pokedex as Poke } from 'pokeapi-js-wrapper';
 import styled from 'styled-components';
-import Pagenation from './Pagenation';
+import Pagination from './Pagination';
 import PokemonCard from './PokemonCard';
 import PokemonDetailCard from './PokemonDetailCard';
 import SearchBar from './SearchBar';
@@ -85,7 +85,7 @@ const PokeList = () => {
             />)
           })}
       </PokeListWrapper>
-      <Pagenation
+      <Pagination
         currentPage={currentPage}
         setCurrentPage={setCurrentPage}
         maxPage={maxPage}

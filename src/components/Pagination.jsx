@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-const Pagenation = ({ currentPage, maxPage, setCurrentPage }) => {
+const Pagination = ({ currentPage, maxPage, setCurrentPage }) => {
   const pageBandCalc = () => {
     const calcNumb = currentPage % 10 ? currentPage : currentPage - 9;
     const bandMinPage = Math.floor(calcNumb / 10) * 10 + 1;
@@ -29,7 +29,7 @@ const Pagenation = ({ currentPage, maxPage, setCurrentPage }) => {
     return pageButtons;
   }
   return (
-    <PagenationWrapper>
+    <PaginationWrapper>
       {currentPage > 10 &&
         <PageButton
           onClick={() => setCurrentPage(bandMinPage - 1)}
@@ -45,19 +45,19 @@ const Pagenation = ({ currentPage, maxPage, setCurrentPage }) => {
           &gt;
         </PageButton>
       }
-    </PagenationWrapper>
+    </PaginationWrapper>
   )
 }
 
-Pagenation.propTypes = {
+Pagination.propTypes = {
   currentPage: PropTypes.number.isRequired,
   maxPage: PropTypes.number.isRequired,
   setCurrentPage: PropTypes.func.isRequired,
 }
 
-export default Pagenation;
+export default Pagination;
 
-const PagenationWrapper = styled.div`
+const PaginationWrapper = styled.div`
   max-width: 800px;
   width: 100%;
   margin: 10px auto;
